@@ -1,18 +1,31 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
+// Producto
 import { ProductoEntity } from "./models/entity/producto.entity";
-import { CategoriaProductoEntity } from "./models/entity/categoria.producto.entity";
-import { ProductoServiceImpl } from "./services/impl/producto.services.impl";
-import { ProductoController } from "./controllers/producto.controller";
+import { ProductoService } from "./services/producto.service";
+
+// Categoria producto
+import { TipoCategoriaProductoEntity } from "./models/entity/tipo.categoria.producto.entity";
+import { CategoriaProductoService } from "./services/tipo.categoria.producto.service";
+import { TipoCategoriaProductoDaoImpl } from "./dao/impl/tipo.categoria.producto.dao.impl";
+import { TipoCategoriaProductoManagerImpl } from "./manager/impl/tipo.categoria.producto.manager.impl";
+import { ProductoDaoImpl } from "./dao/impl/producto.dao.impl";
+import { ProductoManagerImpl } from "./manager/impl/producto.manager.impl";
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([ProductoEntity, CategoriaProductoEntity]),
+        TypeOrmModule.forFeature([ProductoEntity, TipoCategoriaProductoEntity]),
     ],
-    providers: [ProductoServiceImpl],
-    controllers: [ProductoController],
-    exports: [TypeOrmModule],
+    providers: [
+        ProductoDaoImpl, ProductoManagerImpl,
+        TipoCategoriaProductoDaoImpl, TipoCategoriaProductoManagerImpl
+    ],
+    controllers: [ProductoService, CategoriaProductoService],
+    exports: [TypeOrmModule,
+        ProductoDaoImpl, ProductoManagerImpl,
+        TipoCategoriaProductoDaoImpl, TipoCategoriaProductoManagerImpl
+    ],
 })
 
 export class ProductoModule { }

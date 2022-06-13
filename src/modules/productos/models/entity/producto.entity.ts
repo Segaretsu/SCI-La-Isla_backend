@@ -1,26 +1,27 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { CategoriaProductoEntity } from './categoria.producto.entity';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity()
+@Entity("PRODUCTO")
 export class ProductoEntity {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn({ name: "ID_PRODUCTO" })
     idProducto: number;
 
-    @ManyToOne(type => CategoriaProductoEntity)
-    @JoinColumn({ name: 'idCategoriaProducto' })
-    categoria: CategoriaProductoEntity;
+    @Column({ name: "ID_TIPO_CATEGORIA_PRODUCTO" })
+    idCategoriaProducto: number;
 
-    @Column()
+    @Column({ name: "NOMBRE" })
     nombre: string;
 
-    @Column()
+    @Column({ name: "STOCK" })
     stock: number;
 
-    @Column()
+    @Column({ name: "PRECIO_COMPRA" })
     precioCompra: number;
 
-    @Column()
+    @Column({ name: "PRECIO_VENTA" })
     precioVenta: number;
+
+    @Column({ name: "ACTIVO" })
+    activo: boolean;
 
 }
